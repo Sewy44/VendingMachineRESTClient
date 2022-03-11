@@ -6,18 +6,18 @@ $(document).ready(function () {
 });
 
 function initialMoneyIn() {
-    var total = 0;
-    var quarters = 0;
-    var dimes = 0;
-    var nickels = 0;
-    var pennies = 0;
+    let total = 0;
+    let quarters = 0;
+    let dimes = 0;
+    let nickels = 0;
+    let pennies = 0;
     calculateMoneyIn(total, quarters, dimes, nickels, pennies);
     changeReturn(quarters, nickels, dimes, pennies);
 }
 
 function selectItem(id) {
-    var item = $('#itemDisplayField');
-    var messages = $('#messages');
+    let item = $('#itemDisplayField');
+    let messages = $('#messages');
     item.val(id);
     messages.val(null);
 }
@@ -27,7 +27,7 @@ function clearItemTable() {
 }
 
 function calculateMoneyIn(total, quarters, dimes, nickels, pennies) {
-    var output = total.toFixed(2);
+    let output = total.toFixed(2);
     $('#moneyInserted').val(output);
 
     $('#addDollarButton').click(function (event) {
@@ -109,25 +109,25 @@ function calculateMoneyIn(total, quarters, dimes, nickels, pennies) {
 }
 
 function displayMoneyIn(total) {
-    var output = total.toFixed(2);
+    let output = total.toFixed(2);
     $('#moneyInserted').val(output);
 }
 
 function loadItems() {
     clearItemTable();
-    var itemRows = $('#itemRows');
+    let itemRows = $('#itemRows');
 
     $.ajax({
         type: 'GET',
         url: 'http://vending.us-east-1.elasticbeanstalk.com/items',
         success: function (itemArray) {
             $.each(itemArray, function (index, item) {
-                var id = item.id;
-                var name = item.name;
-                var price = item.price;
-                var quantity = item.quantity;
+                let id = item.id;
+                let name = item.name;
+                let price = item.price;
+                let quantity = item.quantity;
 
-                var buttonContent = '<button class="content" onclick="selectItem(' + id + ')">'
+                let buttonContent = '<button class="content" onclick="selectItem(' + id + ')">'
                 buttonContent += '<div class="itemContainer">';
                 buttonContent += '<p class="itemIndex">' + index + '</p>';
                 buttonContent += '<p class="itemName">' + name + '</p>';
@@ -156,8 +156,8 @@ function makePurchase() {
             $('#changeDue').val('');
         }
         else {
-            var id = $('#itemDisplayField').val();
-            var amount = $('#moneyInserted').val();
+            let id = $('#itemDisplayField').val();
+            let amount = $('#moneyInserted').val();
             $('#changeDue').val('');
 
             $.ajax({
@@ -165,10 +165,10 @@ function makePurchase() {
                 url: 'http://vending.us-east-1.elasticbeanstalk.com/money/' + amount + '/item/' + id,
                 success: function (data) {
 
-                    var quarters = data.quarters;
-                    var dimes = data.dimes;
-                    var nickels = data.nickels;
-                    var pennies = data.pennies;
+                    let quarters = data.quarters;
+                    let dimes = data.dimes;
+                    let nickels = data.nickels;
+                    let pennies = data.pennies;
 
                     displayChange(quarters, dimes, nickels, pennies);
                     loadItems();
@@ -176,7 +176,7 @@ function makePurchase() {
                     $('#messages').val('Thank You!!');
                 },
                 error: function (xhr) {
-                    var error = JSON.parse(xhr.responseText)
+                    let error = JSON.parse(xhr.responseText)
                     $('#messages').val(error.message);
                 }
             })
@@ -213,7 +213,7 @@ function firstClickAfterChangeReturn() {
 }
 
 function displayChange(quarters, dimes, nickels, pennies) {
-    var output = '';
+    let output = '';
     if (quarters > 0) {
         if (quarters == 1) {
             output += quarters + ' Quarter ';
